@@ -1,0 +1,343 @@
+﻿@page "/admin-hasxify-2025"
+@layout MainLayout
+@inject IJSRuntime JS
+@inject SiteDataService SiteData
+
+<div class="page-enter">
+
+    @if (!isLoggedIn)
+    {
+        <section class="contact-section" style="padding-top:120px; padding-bottom:80px;">
+
+            <div style="text-align:center; margin-bottom:40px;">
+                <div style="font-size:4rem; margin-bottom:16px;">⚙️</div>
+                <h2 class="section-title">Admin Panel</h2>
+                <p class="section-subtitle">Authorized access only — HASXIFY</p>
+            </div>
+
+            <div class="contact-box" style="max-width:420px;">
+                <div style="text-align:center; margin-bottom:28px;">
+                    <div style="font-size:3rem; margin-bottom:12px;">🔐</div>
+                    <h3 style="font-family:'Orbitron',sans-serif; color:#a855f7; letter-spacing:2px; font-size:1rem;">SECURE LOGIN</h3>
+                    <p style="color:#888; font-size:0.85rem; margin-top:8px;">Enter your admin password to continue</p>
+                </div>
+
+                <label style="display:block; color:#a855f7; font-size:0.8rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px;">Admin Password</label>
+                <input class="contact-input" type="password" placeholder="Enter password..." @bind="password" @onkeypress="HandleKey" />
+
+                @if (wrongPassword)
+                {
+                    <p style="color:#ff6b6b; margin-bottom:16px; font-size:0.9rem;">⚠️ Wrong password! Try again.</p>
+                }
+
+                <button class="btn-primary" style="width:100%; margin-top:8px;" @onclick="Login">
+                    🔓 Login to Admin Panel
+                </button>
+
+                <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(124,58,237,0.2); text-align:center;">
+                    <p style="color:#555; font-size:0.8rem;">🔒 Secure Admin Access — HASXIFY 2025</p>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:32px;">
+                <a href="/" style="color:#a855f7; font-size:0.9rem; text-decoration:none;">← Back to Website</a>
+            </div>
+
+        </section>
+    }
+    else
+    {
+        <section style="padding-top:100px; padding-bottom:60px; max-width:1200px; margin:0 auto; padding-left:40px; padding-right:40px;">
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+                <div>
+                    <h1 style="font-family:'Orbitron',sans-serif; color:#a855f7; letter-spacing:3px; font-size:1.5rem;">⚙️ ADMIN PANEL</h1>
+                    <p style="color:#888; font-size:0.85rem; margin-top:4px;">Welcome back! Manage your HASXIFY website here.</p>
+                </div>
+                <button class="btn-outline" @onclick="Logout">🚪 Logout</button>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="admin-tab @(activeTab == "hero" ? "active" : "")" @onclick='() => activeTab = "hero"'>🏠 Hero</button>
+                <button class="admin-tab @(activeTab == "social" ? "active" : "")" @onclick='() => activeTab = "social"'>📱 Social Media</button>
+                <button class="admin-tab @(activeTab == "courses" ? "active" : "")" @onclick='() => activeTab = "courses"'>📚 Courses</button>
+                <button class="admin-tab @(activeTab == "services" ? "active" : "")" @onclick='() => activeTab = "services"'>⚡ Services</button>
+                <button class="admin-tab @(activeTab == "packages" ? "active" : "")" @onclick='() => activeTab = "packages"'>💰 Packages</button>
+                <button class="admin-tab @(activeTab == "contact" ? "active" : "")" @onclick='() => activeTab = "contact"'>✉️ Contact</button>
+            </div>
+
+            @if (activeTab == "hero")
+            {
+                <div class="admin-section">
+                    <h3 class="admin-section-title">🏠 Hero Section</h3>
+                    <div class="admin-grid">
+                        <div class="admin-field">
+                            <label>Brand Name</label>
+                            <input class="contact-input" @bind="SiteData.HeroName" />
+                        </div>
+                        <div class="admin-field">
+                            <label>Badge Text</label>
+                            <input class="contact-input" @bind="SiteData.HeroBadge" />
+                        </div>
+                        <div class="admin-field" style="grid-column:span 2;">
+                            <label>Tagline</label>
+                            <input class="contact-input" @bind="SiteData.HeroTitle" />
+                        </div>
+                        <div class="admin-field" style="grid-column:span 2;">
+                            <label>Description</label>
+                            <textarea class="contact-input" @bind="SiteData.HeroDesc"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn-primary" @onclick="SaveHero">💾 Save Changes</button>
+                    @if (savedMsg == "hero")
+                    {
+                        <span class="save-msg">✅ Saved! Go to Home page to see changes.</span>
+                    }
+                </div>
+            }
+
+            @if (activeTab == "social")
+            {
+                <div class="admin-section">
+                    <h3 class="admin-section-title">📱 Social Media</h3>
+                    @foreach (var s in SiteData.SocialMedia)
+                    {
+                        <div class="admin-card">
+                            <h4 style="color:#a855f7; margin-bottom:16px;">@s.Icon @s.Platform</h4>
+                            <div class="admin-grid">
+                                <div class="admin-field">
+                                    <label>Handle</label>
+                                    <input class="contact-input" @bind="s.Handle" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Followers</label>
+                                    <input class="contact-input" @bind="s.Followers" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Posts/Videos/Likes</label>
+                                    <input class="contact-input" @bind="s.Posts" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Profile URL</label>
+                                    <input class="contact-input" @bind="s.Url" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <button class="btn-primary" @onclick="SaveSocial">💾 Save Changes</button>
+                    @if (savedMsg == "social")
+                    {
+                        <span class="save-msg">✅ Saved!</span>
+                    }
+                </div>
+            }
+
+            @if (activeTab == "courses")
+            {
+                <div class="admin-section">
+                    <h3 class="admin-section-title">📚 Courses</h3>
+                    @foreach (var c in SiteData.Courses)
+                    {
+                        <div class="admin-card">
+                            <div class="admin-grid">
+                                <div class="admin-field">
+                                    <label>Course Name</label>
+                                    <input class="contact-input" @bind="c.Name" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Price</label>
+                                    <input class="contact-input" @bind="c.Price" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Tag</label>
+                                    <input class="contact-input" @bind="c.Tag" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Icon (emoji)</label>
+                                    <input class="contact-input" @bind="c.Icon" />
+                                </div>
+                                <div class="admin-field" style="grid-column:span 2;">
+                                    <label>Description</label>
+                                    <textarea class="contact-input" @bind="c.Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <button class="btn-primary" @onclick="SaveCourses">💾 Save Changes</button>
+                    @if (savedMsg == "courses")
+                    {
+                        <span class="save-msg">✅ Saved!</span>
+                    }
+                </div>
+            }
+
+            @if (activeTab == "services")
+            {
+                <div class="admin-section">
+                    <h3 class="admin-section-title">⚡ Services</h3>
+                    @foreach (var s in SiteData.Services)
+                    {
+                        <div class="admin-card">
+                            <div class="admin-grid">
+                                <div class="admin-field">
+                                    <label>Service Name</label>
+                                    <input class="contact-input" @bind="s.Name" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Icon (emoji)</label>
+                                    <input class="contact-input" @bind="s.Icon" />
+                                </div>
+                                <div class="admin-field" style="grid-column:span 2;">
+                                    <label>Description</label>
+                                    <textarea class="contact-input" @bind="s.Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <button class="btn-primary" @onclick="SaveServices">💾 Save Changes</button>
+                    @if (savedMsg == "services")
+                    {
+                        <span class="save-msg">✅ Saved!</span>
+                    }
+                </div>
+            }
+
+            @if (activeTab == "packages")
+            {
+                <div class="admin-section">
+                    <h3 class="admin-section-title">💰 Package Prices</h3>
+                    @foreach (var p in SiteData.Packages)
+                    {
+                        <div class="admin-card">
+                            <h4 style="color:#a855f7; margin-bottom:16px;">@p.ServiceName</h4>
+                            <div class="admin-grid">
+                                <div class="admin-field">
+                                    <label>Basic/Starter Price</label>
+                                    <input class="contact-input" @bind="p.BasicPrice" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Pro/Growth Price</label>
+                                    <input class="contact-input" @bind="p.ProPrice" />
+                                </div>
+                                <div class="admin-field">
+                                    <label>Premium/Enterprise Price</label>
+                                    <input class="contact-input" @bind="p.PremiumPrice" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <button class="btn-primary" @onclick="SavePackages">💾 Save Changes</button>
+                    @if (savedMsg == "packages")
+                    {
+                        <span class="save-msg">✅ Saved!</span>
+                    }
+                </div>
+            }
+
+            @if (activeTab == "contact")
+            {
+                <div class="admin-section">
+                    <h3 class="admin-section-title">✉️ Contact Info</h3>
+                    <div class="admin-grid">
+                        <div class="admin-field">
+                            <label>Email</label>
+                            <input class="contact-input" @bind="SiteData.ContactEmail" />
+                        </div>
+                        <div class="admin-field">
+                            <label>Phone/WhatsApp</label>
+                            <input class="contact-input" @bind="SiteData.ContactPhone" />
+                        </div>
+                        <div class="admin-field">
+                            <label>Location/City</label>
+                            <input class="contact-input" @bind="SiteData.ContactCity" />
+                        </div>
+                        <div class="admin-field">
+                            <label>Business Hours</label>
+                            <input class="contact-input" @bind="SiteData.ContactHours" />
+                        </div>
+                    </div>
+                    <button class="btn-primary" @onclick="SaveContact">💾 Save Changes</button>
+                    @if (savedMsg == "contact")
+                    {
+                        <span class="save-msg">✅ Saved!</span>
+                    }
+                </div>
+            }
+
+        </section>
+    }
+</div>
+
+@code {
+    private bool isLoggedIn = false;
+    private bool wrongPassword = false;
+    private string password = "";
+    private string activeTab = "hero";
+    private string savedMsg = "";
+    private string adminPassword = "hasxify@2025";
+
+    private void Login()
+    {
+        if (password == adminPassword) { isLoggedIn = true; wrongPassword = false; }
+        else { wrongPassword = true; }
+    }
+
+    private void HandleKey(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") Login();
+    }
+
+    private void Logout()
+    {
+        isLoggedIn = false;
+        password = "";
+    }
+
+    private async Task SaveHero()
+    {
+        SiteData.NotifyChanged();
+        savedMsg = "hero";
+        await Task.Delay(2000);
+        savedMsg = "";
+    }
+
+    private async Task SaveSocial()
+    {
+        SiteData.NotifyChanged();
+        savedMsg = "social";
+        await Task.Delay(2000);
+        savedMsg = "";
+    }
+
+    private async Task SaveCourses()
+    {
+        SiteData.NotifyChanged();
+        savedMsg = "courses";
+        await Task.Delay(2000);
+        savedMsg = "";
+    }
+
+    private async Task SaveServices()
+    {
+        SiteData.NotifyChanged();
+        savedMsg = "services";
+        await Task.Delay(2000);
+        savedMsg = "";
+    }
+
+    private async Task SavePackages()
+    {
+        SiteData.NotifyChanged();
+        savedMsg = "packages";
+        await Task.Delay(2000);
+        savedMsg = "";
+    }
+
+    private async Task SaveContact()
+    {
+        SiteData.NotifyChanged();
+        savedMsg = "contact";
+        await Task.Delay(2000);
+        savedMsg = "";
+    }
+}

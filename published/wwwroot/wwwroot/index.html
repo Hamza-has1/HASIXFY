@@ -79,6 +79,20 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">&#x2717;</a>
     </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script>
+        // .NET 10 fingerprinted file auto-detect
+        fetch('_framework/blazor.boot.json')
+            .then(r => r.json())
+            .then(boot => {
+                var jsFile = boot.resources && boot.resources.runtime &&
+                    Object.keys(boot.resources.runtime).find(k => k.startsWith('blazor.webassembly'));
+                if (jsFile) {
+                    var s = document.createElement('script');
+                    s.src = '_framework/' + jsFile;
+                    document.body.appendChild(s);
+                }
+            });
+    </script>
 </body>
 </html>

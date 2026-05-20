@@ -1,0 +1,56 @@
+﻿@page "/contact"
+@layout MainLayout
+
+<div class="page-enter">
+    <section class="contact-section" style="padding-top: 120px;">
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-subtitle">Have a project in mind? Let's make it happen.</p>
+
+        <div class="contact-box reveal">
+            <div style="margin-bottom: 32px;">
+                <span style="font-size: 3rem;">✉️</span>
+            </div>
+
+            <input class="contact-input" type="text" placeholder="Your Name" @bind="name" />
+            <input class="contact-input" type="email" placeholder="Your Email" @bind="email" />
+            <input class="contact-input" type="text" placeholder="Subject" @bind="subject" />
+            <textarea class="contact-input" placeholder="Your message..." @bind="message"></textarea>
+
+            <button class="btn-primary" style="width: 100%; margin-top: 8px;" @onclick="SendMessage">
+                @(sent ? "✓ Message Sent!" : "Send Message →")
+            </button>
+
+            @if (sent)
+            {
+                <p style="color: #a855f7; margin-top: 16px; font-size: 0.9rem;">
+                    Thank you! I'll get back to you within 24 hours.
+                </p>
+            }
+        </div>
+
+        <div style="margin-top: 60px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+            <a href="https://instagram.com/hasxify" target="_blank" class="btn-outline">📸 Instagram</a>
+            <a href="https://youtube.com/@@hasxify" target="_blank" class="btn-outline">▶️ YouTube</a>
+            <a href="https://linkedin.com/in/hasxify" target="_blank" class="btn-outline">💼 LinkedIn</a>
+        </div>
+    </section>
+</div>
+
+@code {
+    private string name = "";
+    private string email = "";
+    private string subject = "";
+    private string message = "";
+    private bool sent = false;
+
+    private async Task SendMessage()
+    {
+        if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(email))
+        {
+            sent = true;
+            await Task.Delay(3000);
+            sent = false;
+            name = email = subject = message = "";
+        }
+    }
+}

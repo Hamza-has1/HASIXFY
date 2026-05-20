@@ -1,0 +1,115 @@
+﻿@page "/course-starter-kit"
+@layout MainLayout
+
+<div class="page-enter">
+    <section class="service-hero" style="background: radial-gradient(ellipse at center, rgba(16,185,129,0.2) 0%, transparent 70%), #000;">
+        <div class="service-hero-content">
+            <span class="service-hero-icon">🎯</span>
+            <h1 class="platform-title" style="background: linear-gradient(135deg, #fff, #34d399); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Creator Starter Kit</h1>
+            <p class="platform-sub">Free beginner course to kickstart your creator journey</p>
+            <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+                <span class="course-tag" style="background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.4); color:#34d399;">🆓 FREE</span>
+                <span class="course-tag">👥 5,000+ Students</span>
+                <span class="course-tag">⏱️ 5+ Hours</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-section">
+        <div style="max-width:900px; margin:0 auto;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+                <div>
+                    <h2 class="section-title" style="text-align:left; font-size:1.5rem;">What You'll Learn</h2>
+                    <div style="margin-top:24px;">
+                        @foreach (var item in learnings)
+                        {
+                            <div style="display:flex; gap:12px; margin-bottom:16px; align-items:flex-start;">
+                                <span style="color:#34d399; font-size:1.2rem;">✓</span>
+                                <p style="color:#e2e8f0; font-size:1rem; line-height:1.6;">@item</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div>
+                    <div class="contact-box" style="padding:32px;">
+                        <div style="font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:900; color:#34d399; margin-bottom:8px;">FREE</div>
+                        <p style="color:#888; margin-bottom:24px; font-size:0.9rem;">No credit card required • Instant access</p>
+                        <a href="/login" class="btn-primary" style="display:block; text-align:center; margin-bottom:12px; background:linear-gradient(135deg,#065f46,#10b981);">Start For Free →</a>
+                        <a href="/contact" class="btn-outline" style="display:block; text-align:center;">Ask a Question</a>
+                        <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(124,58,237,0.2);">
+                            <div style="color:#888; font-size:0.85rem; margin-bottom:8px;">✅ Completely free forever</div>
+                            <div style="color:#888; font-size:0.85rem; margin-bottom:8px;">✅ No credit card needed</div>
+                            <div style="color:#888; font-size:0.85rem; margin-bottom:8px;">✅ Instant access</div>
+                            <div style="color:#888; font-size:0.85rem;">✅ Mobile & desktop access</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="courses-section">
+        <h2 class="section-title">Course Curriculum</h2>
+        <p class="section-subtitle">5+ hours of free content across 3 modules</p>
+        <div style="max-width:800px; margin:0 auto;">
+            @foreach (var module in curriculum)
+            {
+                <div class="admin-card" style="margin-bottom:16px;">
+                    <h4 style="color:#34d399; font-family:'Orbitron',sans-serif; font-size:0.9rem; letter-spacing:1px; margin-bottom:12px;">@module.Title</h4>
+                    <p style="color:#888; font-size:0.9rem;">@module.Topics</p>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- YOUR FUTURE SECTION -->
+    <section class="sp-process-section">
+        <h2 class="section-title">Your Future After This Course</h2>
+        <p class="section-subtitle">Yeh free course aapki digital journey ka pehla qadam hai</p>
+        <div class="process-grid">
+            @foreach (var f in futures)
+            {
+                <div class="process-step reveal">
+                    <div style="font-size:2.5rem; margin-bottom:16px;">@f.Icon</div>
+                    <div class="process-title">@f.Title</div>
+                    <p class="process-desc">@f.Desc</p>
+                </div>
+            }
+        </div>
+        <div style="text-align:center; margin-top:48px;">
+            <a href="/login" class="btn-primary" style="background:linear-gradient(135deg,#065f46,#10b981);">Start For Free →</a>
+            <div style="margin-top:20px;">
+                <a href="/courses" class="btn-outline">Explore Paid Courses →</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    private List<string> learnings = new()
+    {
+        "What content creation really is and how to get started",
+        "Choosing the right platform for your content style",
+        "Basic equipment you need (and what you don't)",
+        "Your first video — from idea to upload",
+        "Understanding the basics of growth and engagement",
+    };
+
+    private List<ModuleItem> curriculum = new()
+    {
+        new ModuleItem { Title = "Module 1 — Getting Started", Topics = "Content creation basics, platform selection, mindset and consistency" },
+        new ModuleItem { Title = "Module 2 — Your First Content", Topics = "Equipment basics, filming your first video, basic editing, uploading" },
+        new ModuleItem { Title = "Module 3 — Next Steps", Topics = "Growth basics, what to do after your first 10 videos, upgrading your setup" },
+    };
+
+    private record FutureItem(string Icon, string Title, string Desc);
+    private List<FutureItem> futures = new()
+    {
+        new("🎬", "First Video Live", "Is course ke baad aap apna pehla video confident hoke upload kar sakte hain — bina kisi confusion ke."),
+        new("🧭", "Clear Direction", "Aapko pata hoga kaunsa platform aapke liye best hai aur wahan kaise start karna hai."),
+        new("🛠️", "Right Tools", "Paise waste karne ki zaroorat nahi — aapko exact pata hoga kaunsa equipment actually zaroori hai beginner ke liye."),
+        new("📅", "Consistent Creator", "Aap ek basic content schedule set kar sakte hain jo aapke routine mein fit ho jaye."),
+        new("🚀", "Ready to Grow", "Yeh starter kit aapko hamare advanced courses ke liye tayyar karta hai — Content Creation Masterclass tak pohonchne ka seedha rasta."),
+        new("🌱", "Foundation Set", "Har bada creator kabhi beginner tha — aaj aap apni journey ka pehla qadam utha rahe hain. Yahan se sirf oopar jana hai."),
+    };
+}

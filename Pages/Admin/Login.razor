@@ -1,0 +1,161 @@
+﻿@page "/login"
+@layout MainLayout
+@inject NavigationManager Navigation
+
+<div class="page-enter">
+    <section class="contact-section" style="padding-top: 120px; padding-bottom: 60px;">
+
+        <div class="auth-tabs">
+            <button class="auth-tab @(showLogin ? "active" : "")" @onclick="() => showLogin = true">
+                🔐 Sign In
+            </button>
+            <button class="auth-tab @(!showLogin ? "active" : "")" @onclick="() => showLogin = false">
+                🎓 Sign Up
+            </button>
+        </div>
+
+        @if (showLogin)
+        {
+            <div class="contact-box auth-box">
+                <span style="font-size:3rem;">👋</span>
+                <h3 class="auth-title">Welcome Back!</h3>
+                <p class="auth-sub">Sign in to your HASXIFY account</p>
+
+                <input class="contact-input" type="email" placeholder="Email Address *" @bind="loginEmail" />
+                <input class="contact-input" type="password" placeholder="Password *" @bind="loginPassword" />
+
+                <div style="text-align:right; margin-bottom:20px;">
+                    <span style="color:#a855f7; font-size:0.85rem; cursor:pointer;">Forgot Password?</span>
+                </div>
+
+                @if (!string.IsNullOrEmpty(loginError))
+                {
+                    <p class="auth-error">⚠️ @loginError</p>
+                }
+                @if (loginSuccess)
+                {
+                    <p class="auth-success">✓ Login successful! Redirecting...</p>
+                }
+
+                <button class="btn-primary" style="width:100%;" @onclick="HandleLogin">
+                    @(loginSuccess ? "✓ Logged In!" : "Sign In →")
+                </button>
+
+                <div class="auth-divider"><span>or continue with</span></div>
+
+                <div class="social-login-btns">
+                    <button class="social-login-btn"><span>G</span> Google</button>
+                    <button class="social-login-btn"><span>f</span> Facebook</button>
+                </div>
+
+                <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(124,58,237,0.2); text-align:center;">
+                    <a href="/admin-hasxify-2025" class="btn-outline" style="font-size:0.85rem; padding:10px 24px;">
+                        ⚙️ Admin Panel
+                    </a>
+                </div>
+
+                <div class="auth-switch">
+                    Don't have an account?
+                    <span @onclick="() => showLogin = false">Sign Up</span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="contact-box auth-box">
+                <span style="font-size:3rem;">🚀</span>
+                <h3 class="auth-title">Create Account</h3>
+                <p class="auth-sub">Join the HASXIFY community today</p>
+
+                <div class="input-grid">
+                    <input class="contact-input" type="text" placeholder="Full Name *" @bind="fullName" style="margin-bottom:0;" />
+                    <input class="contact-input" type="text" placeholder="Username *" @bind="username" style="margin-bottom:0;" />
+                </div>
+                <div style="height:16px;"></div>
+
+                <input class="contact-input" type="email" placeholder="Email Address *" @bind="signupEmail" />
+
+                <div class="input-grid">
+                    <input class="contact-input" type="password" placeholder="Password *" @bind="signupPassword" style="margin-bottom:0;" />
+                    <input class="contact-input" type="password" placeholder="Confirm Password *" @bind="confirmPassword" style="margin-bottom:0;" />
+                </div>
+                <div style="height:16px;"></div>
+
+                <input class="contact-input" type="tel" placeholder="Mobile Number" @bind="mobile" />
+
+                <div class="terms-check">
+                    <input type="checkbox" id="terms" @bind="termsAccepted" />
+                    <label for="terms">
+                        I agree to the <span style="color:#a855f7;">Terms & Conditions</span> and <span style="color:#a855f7;">Privacy Policy</span>
+                    </label>
+                </div>
+
+                @if (!string.IsNullOrEmpty(signupError))
+                {
+                    <p class="auth-error">⚠️ @signupError</p>
+                }
+                @if (signupSuccess)
+                {
+                    <p class="auth-success">🎉 Account created! Welcome to HASXIFY!</p>
+                }
+
+                <button class="btn-primary" style="width:100%; margin-top:8px;" @onclick="HandleSignup">
+                    @(signupSuccess ? "✓ Account Created!" : "Create Account →")
+                </button>
+
+                <div class="auth-divider"><span>or sign up with</span></div>
+
+                <div class="social-login-btns">
+                    <button class="social-login-btn"><span>G</span> Google</button>
+                    <button class="social-login-btn"><span>f</span> Facebook</button>
+                </div>
+
+                <div class="auth-switch">
+                    Already have an account?
+                    <span @onclick="() => showLogin = true">Sign In</span>
+                </div>
+            </div>
+        }
+    </section>
+</div>
+
+@code {
+    private bool showLogin = true;
+    private bool loginSuccess = false;
+    private bool signupSuccess = false;
+    private string loginError = "";
+    private string signupError = "";
+
+    private string loginEmail = "";
+    private string loginPassword = "";
+
+    private string fullName = "";
+    private string username = "";
+    private string signupEmail = "";
+    private string signupPassword = "";
+    private string confirmPassword = "";
+    private string mobile = "";
+    private bool termsAccepted = false;
+
+    private async Task HandleLogin()
+    {
+        loginError = "";
+        if (string.IsNullOrWhiteSpace(loginEmail)) { loginError = "Please enter your email!"; return; }
+        if (string.IsNullOrWhiteSpace(loginPassword)) { loginError = "Please enter your password!"; return; }
+        loginSuccess = true;
+        await Task.Delay(1500);
+        Navigation.NavigateTo("/enroll/dashboard");
+    }
+
+    private async Task HandleSignup()
+    {
+        signupError = "";
+        if (string.IsNullOrWhiteSpace(fullName)) { signupError = "Please enter your full name!"; return; }
+        if (string.IsNullOrWhiteSpace(signupEmail)) { signupError = "Please enter your email!"; return; }
+        if (signupPassword != confirmPassword) { signupError = "Passwords do not match!"; return; }
+        if (!termsAccepted) { signupError = "Please accept Terms & Conditions!"; return; }
+        signupSuccess = true;
+        await Task.Delay(1500);
+        Navigation.NavigateTo("/enroll/dashboard");
+    }
+}

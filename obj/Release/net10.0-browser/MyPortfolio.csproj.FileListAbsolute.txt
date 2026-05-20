@@ -1,0 +1,10 @@
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\EmbeddedAttribute.cs
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\ValidatableTypeAttribute.cs
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\MyPortfolio.csproj.AssemblyReference.cache
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\rpswa.dswa.cache.json
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\MyPortfolio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\MyPortfolio.AssemblyInfoInputs.cache
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\MyPortfolio.AssemblyInfo.cs
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\MyPortfolio.csproj.CoreCompileInputs.cache
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\MyPortfolio.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\obj\Release\net10.0-browser\MyPortfolio.sourcelink.json

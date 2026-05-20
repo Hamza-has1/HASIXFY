@@ -1,0 +1,39 @@
+﻿@inherits LayoutComponentBase
+
+<div class="layout-wrapper @(isDark ? "dark-mode" : "light-mode")">
+    <nav class="navbar">
+        <a href="/" class="navbar-logo">HASXIFY</a>
+        <ul class="navbar-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/instagram">Instagram</a></li>
+            <li><a href="/youtube">YouTube</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/courses">Courses</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+
+        <!-- Day/Night Toggle -->
+        <button class="theme-toggle" @onclick="ToggleTheme">
+            @(isDark ? "☀️" : "🌙")
+        </button>
+    </nav>
+
+    <main>
+        @Body
+    </main>
+
+    <footer class="footer">
+        <div class="footer-logo">HASXIFY</div>
+        <p class="footer-text">© 2025 HASXIFY. Crafting content that hits different.</p>
+    </footer>
+</div>
+
+@code {
+    private bool isDark = true;
+
+    private void ToggleTheme()
+    {
+        isDark = !isDark;
+    }
+}
