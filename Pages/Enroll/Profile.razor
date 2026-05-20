@@ -1,0 +1,180 @@
+﻿@page "/enroll/profile"
+@layout MainLayout
+
+<div class="page-enter">
+    <section style="padding-top:100px; padding-bottom:60px; max-width:900px; margin:0 auto; padding-left:40px; padding-right:40px;">
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; flex-wrap:wrap; gap:16px;">
+            <div>
+                <h1 style="font-family:'Orbitron',sans-serif; color:white; font-size:1.5rem; letter-spacing:3px;">👤 MY PROFILE</h1>
+                <p style="color:#888; margin-top:4px;">Manage your account information</p>
+            </div>
+            <a href="/enroll/dashboard" class="btn-outline" style="font-size:0.85rem; padding:10px 20px;">← Dashboard</a>
+        </div>
+
+        <!-- Profile Header -->
+        <div class="admin-section" style="margin-bottom:24px; text-align:center;">
+            <div style="width:100px; height:100px; border-radius:50%; background:linear-gradient(135deg,#7c3aed,#a855f7); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:3rem; border:3px solid rgba(124,58,237,0.6); box-shadow:0 0 30px rgba(124,58,237,0.4);">
+                👤
+            </div>
+            <h2 style="font-family:'Orbitron',sans-serif; color:white; letter-spacing:2px; margin-bottom:4px;">@fullName</h2>
+            <p style="color:#a855f7; font-size:0.9rem;">@fieldOfInterest</p>
+            <p style="color:#888; font-size:0.85rem; margin-top:4px;">Member since May 2025</p>
+            <div style="display:flex; gap:24px; justify-content:center; margin-top:20px;">
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:1.2rem; font-weight:700; color:#a855f7;">3</div>
+                    <div style="color:#888; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;">Courses</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:1.2rem; font-weight:700; color:#a855f7;">24</div>
+                    <div style="color:#888; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;">Hours</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:'Orbitron',sans-serif; font-size:1.2rem; font-weight:700; color:#a855f7;">1</div>
+                    <div style="color:#888; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;">Certificates</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile -->
+        <div class="admin-section" style="margin-bottom:24px;">
+            <h3 class="admin-section-title">✏️ Personal Information</h3>
+            <div class="admin-grid">
+                <div class="admin-field">
+                    <label>Full Name</label>
+                    <input class="contact-input" @bind="fullName" placeholder="Your full name" />
+                </div>
+                <div class="admin-field">
+                    <label>Father Name</label>
+                    <input class="contact-input" @bind="fatherName" placeholder="Father's name" />
+                </div>
+                <div class="admin-field">
+                    <label>Age</label>
+                    <input class="contact-input" type="number" @bind="age" placeholder="Your age" />
+                </div>
+                <div class="admin-field">
+                    <label>City</label>
+                    <input class="contact-input" @bind="city" placeholder="Your city" />
+                </div>
+                <div class="admin-field">
+                    <label>Mobile Number</label>
+                    <input class="contact-input" type="tel" @bind="mobile" placeholder="Mobile number" />
+                </div>
+                <div class="admin-field">
+                    <label>Email</label>
+                    <input class="contact-input" type="email" @bind="email" placeholder="Email address" />
+                </div>
+                <div class="admin-field" style="grid-column:span 2;">
+                    <label>Field of Interest</label>
+                    <select class="contact-input" @bind="fieldOfInterest">
+                        <option value="">Select your interest</option>
+                        <option value="Content Creation">Content Creation</option>
+                        <option value="Video Editing">Video Editing</option>
+                        <option value="Social Media Marketing">Social Media Marketing</option>
+                        <option value="Personal Branding">Personal Branding</option>
+                        <option value="Monetization">Monetization</option>
+                        <option value="Digital Marketing">Digital Marketing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            @if (profileSaved)
+            {
+                <p style="color:#a855f7; margin-bottom:16px;">✅ Profile updated successfully!</p>
+            }
+
+            <button class="btn-primary" @onclick="SaveProfile">💾 Save Changes</button>
+        </div>
+
+        <!-- Change Password -->
+        <div class="admin-section" style="margin-bottom:24px;">
+            <h3 class="admin-section-title">🔐 Change Password</h3>
+            <div class="admin-grid">
+                <div class="admin-field">
+                    <label>Current Password</label>
+                    <input class="contact-input" type="password" @bind="currentPassword" placeholder="Current password" />
+                </div>
+                <div class="admin-field">
+                    <label>New Password</label>
+                    <input class="contact-input" type="password" @bind="newPassword" placeholder="New password" />
+                </div>
+                <div class="admin-field" style="grid-column:span 2;">
+                    <label>Confirm New Password</label>
+                    <input class="contact-input" type="password" @bind="confirmPassword" placeholder="Confirm new password" />
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(passwordMsg))
+            {
+                <p style="color:@(passwordSuccess ? "#a855f7" : "#ff6b6b"); margin-bottom:16px;">@passwordMsg</p>
+            }
+
+            <button class="btn-outline" @onclick="ChangePassword">🔑 Update Password</button>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="admin-section" style="border-color:rgba(255,107,107,0.3);">
+            <h3 class="admin-section-title" style="color:#ff6b6b;">⚠️ Danger Zone</h3>
+            <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Once you delete your account, there is no going back. Please be certain.</p>
+            <button style="background:transparent; border:1px solid rgba(255,107,107,0.5); color:#ff6b6b; padding:10px 24px; border-radius:50px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:1px; transition:all 0.3s;" @onclick="() => showDeleteConfirm = true">
+                🗑️ Delete Account
+            </button>
+
+            @if (showDeleteConfirm)
+            {
+                <div style="margin-top:16px; padding:16px; background:rgba(255,107,107,0.08); border:1px solid rgba(255,107,107,0.2); border-radius:12px;">
+                    <p style="color:#ff6b6b; margin-bottom:12px; font-size:0.9rem;">Are you sure? This action cannot be undone!</p>
+                    <div style="display:flex; gap:12px;">
+                        <button class="btn-primary" style="background:linear-gradient(135deg,#dc2626,#ef4444); padding:8px 20px; font-size:0.85rem;">Yes, Delete</button>
+                        <button class="btn-outline" style="padding:8px 20px; font-size:0.85rem;" @onclick="() => showDeleteConfirm = false">Cancel</button>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </section>
+</div>
+
+@code {
+    private string fullName = "Student Name";
+    private string fatherName = "";
+    private string email = "";
+    private string mobile = "";
+    private string city = "";
+    private int age = 0;
+    private string fieldOfInterest = "Content Creation";
+    private bool profileSaved = false;
+
+    private string currentPassword = "";
+    private string newPassword = "";
+    private string confirmPassword = "";
+    private string passwordMsg = "";
+    private bool passwordSuccess = false;
+    private bool showDeleteConfirm = false;
+
+    private async Task SaveProfile()
+    {
+        profileSaved = true;
+        await Task.Delay(3000);
+        profileSaved = false;
+    }
+
+    private async Task ChangePassword()
+    {
+        if (string.IsNullOrWhiteSpace(currentPassword))
+        { passwordMsg = "⚠️ Enter current password!"; passwordSuccess = false; return; }
+
+        if (newPassword != confirmPassword)
+        { passwordMsg = "⚠️ Passwords do not match!"; passwordSuccess = false; return; }
+
+        if (newPassword.Length < 6)
+        { passwordMsg = "⚠️ Password must be at least 6 characters!"; passwordSuccess = false; return; }
+
+        passwordMsg = "✅ Password updated successfully!";
+        passwordSuccess = true;
+        currentPassword = newPassword = confirmPassword = "";
+        await Task.Delay(3000);
+        passwordMsg = "";
+    }
+}

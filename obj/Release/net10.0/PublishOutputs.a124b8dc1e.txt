@@ -1,0 +1,4 @@
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\published\published\wwwroot\_redirects
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\published\MyPortfolio.runtimeconfig.json
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\published\dotnet.js
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\published\web.config

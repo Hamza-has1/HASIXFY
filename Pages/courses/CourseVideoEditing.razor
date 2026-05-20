@@ -1,0 +1,118 @@
+﻿@page "/course-video-editing"
+@layout MainLayout
+
+<div class="page-enter">
+    <section class="service-hero" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.3) 0%, transparent 70%), #000;">
+        <div class="service-hero-content">
+            <span class="service-hero-icon">🎬</span>
+            <h1 class="platform-title" style="background: linear-gradient(135deg, #fff, #a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Video Editing Pro</h1>
+            <p class="platform-sub">Master video editing for YouTube, Reels and TikTok</p>
+            <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+                <span class="course-tag">🎓 Advanced</span>
+                <span class="course-tag">👥 900+ Students</span>
+                <span class="course-tag">⏱️ 25+ Hours</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-section">
+        <div style="max-width:900px; margin:0 auto;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+                <div>
+                    <h2 class="section-title" style="text-align:left; font-size:1.5rem;">What You'll Learn</h2>
+                    <div style="margin-top:24px;">
+                        @foreach (var item in learnings)
+                        {
+                            <div style="display:flex; gap:12px; margin-bottom:16px; align-items:flex-start;">
+                                <span style="color:#a855f7; font-size:1.2rem;">✓</span>
+                                <p style="color:#e2e8f0; font-size:1rem; line-height:1.6;">@item</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div>
+                    <div class="contact-box" style="padding:32px;">
+                        <div style="font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:900; color:#a855f7; margin-bottom:8px;">PKR 5,999</div>
+                        <p style="color:#888; margin-bottom:24px; font-size:0.9rem;">One-time payment • Lifetime access</p>
+                        <a href="/login" class="btn-primary" style="display:block; text-align:center; margin-bottom:12px;">Enroll Now →</a>
+                        <a href="/contact" class="btn-outline" style="display:block; text-align:center;">Ask a Question</a>
+                        <div style="margin-top:24px; padding-top:24px; border-top:1px solid rgba(124,58,237,0.2);">
+                            <div style="color:#888; font-size:0.85rem; margin-bottom:8px;">✅ 30-day money back guarantee</div>
+                            <div style="color:#888; font-size:0.85rem; margin-bottom:8px;">✅ Lifetime access</div>
+                            <div style="color:#888; font-size:0.85rem; margin-bottom:8px;">✅ Certificate of completion</div>
+                            <div style="color:#888; font-size:0.85rem;">✅ Mobile & desktop access</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="courses-section">
+        <h2 class="section-title">Course Curriculum</h2>
+        <p class="section-subtitle">25+ hours of content across 6 modules</p>
+        <div style="max-width:800px; margin:0 auto;">
+            @foreach (var module in curriculum)
+            {
+                <div class="admin-card" style="margin-bottom:16px;">
+                    <h4 style="color:#a855f7; font-family:'Orbitron',sans-serif; font-size:0.9rem; letter-spacing:1px; margin-bottom:12px;">@module.Title</h4>
+                    <p style="color:#888; font-size:0.9rem;">@module.Topics</p>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- YOUR FUTURE SECTION -->
+    <section class="sp-process-section">
+        <h2 class="section-title">Your Future After This Course</h2>
+        <p class="section-subtitle">Yeh course khatam karne ke baad aapki life kaise badlegi</p>
+        <div class="process-grid">
+            @foreach (var f in futures)
+            {
+                <div class="process-step reveal">
+                    <div style="font-size:2.5rem; margin-bottom:16px;">@f.Icon</div>
+                    <div class="process-title">@f.Title</div>
+                    <p class="process-desc">@f.Desc</p>
+                </div>
+            }
+        </div>
+        <div style="text-align:center; margin-top:48px;">
+            <a href="/login" class="btn-primary">Master Editing Today →</a>
+        </div>
+    </section>
+</div>
+
+@code {
+    private List<string> learnings = new()
+    {
+        "Professional video editing in Premiere Pro & CapCut",
+        "Color grading and cinematic looks",
+        "Motion graphics and text animations",
+        "Sound design and audio mixing",
+        "Thumbnail design that gets clicks",
+        "Short form editing for Reels and TikTok",
+        "Long form editing for YouTube",
+        "Exporting optimized videos for every platform",
+    };
+
+    private List<ModuleItem> curriculum = new()
+    {
+        new ModuleItem { Title = "Module 1 — Software Setup", Topics = "Installing and configuring Premiere Pro, CapCut, workspace setup" },
+        new ModuleItem { Title = "Module 2 — Basic Editing", Topics = "Cut, trim, transitions, text overlays, basic effects" },
+        new ModuleItem { Title = "Module 3 — Color Grading", Topics = "Color correction, LUTs, cinematic grading, skin tones" },
+        new ModuleItem { Title = "Module 4 — Motion & Graphics", Topics = "Animations, lower thirds, intro/outro, motion graphics" },
+        new ModuleItem { Title = "Module 5 — Audio", Topics = "Background music, sound effects, noise removal, mixing" },
+        new ModuleItem { Title = "Module 6 — Export & Publish", Topics = "Platform-specific export settings, thumbnails, uploading" },
+    };
+
+    private record FutureItem(string Icon, string Title, string Desc);
+    private List<FutureItem> futures = new()
+    {
+        new("✂️", "Professional Editor", "Aap cinematic quality videos edit karne ke qabil ho jayenge — woh videos jo views attract karte hain aur audience retain karti hain."),
+        new("💵", "Freelance Editing", "Brands, creators aur businesses ke liye video editing karein — per video PKR 5,000 se 50,000+ tak earn karo."),
+        new("🎨", "Creative Control", "Apne content ka visual look aur feel khud decide kar sakte hain — koi doosre editor par depend karne ki zaroorat nahi."),
+        new("⚡", "Faster Workflow", "Professional shortcuts aur workflow se aap 10 ghante ka kaam 3 ghante mein kar sakte hain."),
+        new("🎬", "YouTube Ready", "Aapke videos professional lagenge — cinematic color grade, clean cuts, perfect audio — sab kuch on point."),
+        new("🏅", "In-Demand Skill", "Video editing 2025 ki sabse in-demand digital skill hai — har brand, har creator ko ek acha editor chahiye."),
+    };
+}

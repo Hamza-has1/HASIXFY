@@ -1,0 +1,120 @@
+﻿@page "/enroll/my-courses"
+@layout MainLayout
+
+<div class="page-enter">
+    <section style="padding-top:100px; padding-bottom:60px; max-width:1200px; margin:0 auto; padding-left:40px; padding-right:40px;">
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; flex-wrap:wrap; gap:16px;">
+            <div>
+                <h1 style="font-family:'Orbitron',sans-serif; color:white; font-size:1.5rem; letter-spacing:3px;">📚 MY COURSES</h1>
+                <p style="color:#888; margin-top:4px;">Track your learning journey</p>
+            </div>
+            <a href="/enroll/dashboard" class="btn-outline" style="font-size:0.85rem; padding:10px 20px;">← Dashboard</a>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="admin-tabs" style="margin-bottom:32px;">
+            <button class="admin-tab @(filter == "all" ? "active" : "")" @onclick='() => filter = "all"'>All Courses</button>
+            <button class="admin-tab @(filter == "inprogress" ? "active" : "")" @onclick='() => filter = "inprogress"'>In Progress</button>
+            <button class="admin-tab @(filter == "completed" ? "active" : "")" @onclick='() => filter = "completed"'>Completed</button>
+        </div>
+
+        <!-- Course Cards -->
+        <div class="courses-grid">
+            @foreach (var course in FilteredCourses)
+            {
+                <div class="course-card reveal">
+                    <div class="course-banner" style="background:@course.BannerColor; position:relative;">
+                        <span style="font-size:3rem;">@course.Icon</span>
+                        @if (course.Progress == 100)
+                        {
+                            <div style="position:absolute; top:12px; right:12px; background:#10b981; border-radius:50px; padding:4px 12px; font-size:0.7rem; color:white; font-weight:700;">✅ COMPLETED</div>
+                        }
+                        else
+                        {
+                            <div style="position:absolute; top:12px; right:12px; background:rgba(124,58,237,0.8); border-radius:50px; padding:4px 12px; font-size:0.7rem; color:white; font-weight:700;">@course.Progress% Done</div>
+                        }
+                    </div>
+                    <div class="course-body">
+                        <span class="course-tag">@course.Field</span>
+                        <div class="course-title">@course.Name</div>
+                        <div style="margin:12px 0;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                                <span style="color:#888; font-size:0.8rem;">Progress</span>
+                                <span style="color:#a855f7; font-size:0.8rem; font-weight:700;">@course.Progress%</span>
+                            </div>
+                            <div style="background:rgba(124,58,237,0.1); border-radius:50px; height:6px; overflow:hidden;">
+                                <div style="background:linear-gradient(90deg,#7c3aed,#c084fc); height:100%; width:@(course.Progress)%; border-radius:50px;"></div>
+                            </div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                            <span style="color:#888; font-size:0.8rem;">⏰ @course.Hours hrs studied</span>
+                            <span style="color:#888; font-size:0.8rem;">📅 @course.LastStudied</span>
+                        </div>
+                        <div class="course-footer" style="margin-top:16px;">
+                            @if (course.Progress == 100)
+                            {
+                                <button class="course-btn" style="background:linear-gradient(135deg,#065f46,#10b981);">🏆 Get Certificate</button>
+                            }
+                            else
+                            {
+                                <button class="course-btn" @onclick="() => UpdateProgress(course)">▶ Continue</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (!FilteredCourses.Any())
+        {
+            <div style="text-align:center; padding:60px; color:#888;">
+                <div style="font-size:4rem; margin-bottom:16px;">📭</div>
+                <p style="font-size:1.1rem;">No courses found!</p>
+                <a href="/courses" class="btn-primary" style="display:inline-block; margin-top:20px;">Browse Courses →</a>
+            </div>
+        }
+
+        <!-- Browse More -->
+        <div style="text-align:center; margin-top:48px; padding-top:32px; border-top:1px solid rgba(124,58,237,0.15);">
+            <p style="color:#888; margin-bottom:16px;">Want to learn more?</p>
+            <a href="/courses" class="btn-primary">Browse All Courses →</a>
+        </div>
+
+    </section>
+</div>
+
+@code {
+    private string filter = "all";
+
+    private List<MyCourse> allCourses = new()
+    {
+        new MyCourse { Icon = "🚀", Name = "Content Creation Masterclass", Field = "Content Creation", Progress = 65, Hours = 13, LastStudied = "Today", BannerColor = "linear-gradient(135deg,#1a0533,#4c1d95,#7c3aed)" },
+        new MyCourse { Icon = "📈", Name = "Social Media Growth Blueprint", Field = "Social Media", Progress = 30, Hours = 5, LastStudied = "Yesterday", BannerColor = "linear-gradient(135deg,#0f172a,#1e3a8a,#3b82f6)" },
+        new MyCourse { Icon = "💡", Name = "Personal Branding Bootcamp", Field = "Branding", Progress = 100, Hours = 12, LastStudied = "3 days ago", BannerColor = "linear-gradient(135deg,#1a0533,#6d28d9,#c084fc)" },
+    };
+
+    private IEnumerable<MyCourse> FilteredCourses => filter switch
+    {
+        "inprogress" => allCourses.Where(c => c.Progress > 0 && c.Progress < 100),
+        "completed" => allCourses.Where(c => c.Progress == 100),
+        _ => allCourses
+    };
+
+    private void UpdateProgress(MyCourse course)
+    {
+        course.Progress = Math.Min(course.Progress + 10, 100);
+        course.LastStudied = "Just now";
+    }
+
+    private class MyCourse
+    {
+        public string Icon { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Field { get; set; } = "";
+        public int Progress { get; set; }
+        public int Hours { get; set; }
+        public string LastStudied { get; set; } = "";
+        public string BannerColor { get; set; } = "";
+    }
+}

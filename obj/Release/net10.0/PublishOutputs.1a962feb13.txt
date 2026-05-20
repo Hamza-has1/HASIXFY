@@ -1,0 +1,7 @@
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\bin\Release\net10.0\publish\published\web.config
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\bin\Release\net10.0\publish\published\MyPortfolio.runtimeconfig.json
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\bin\Release\net10.0\publish\published\MyPortfolio.staticwebassets.endpoints.json
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\bin\Release\net10.0\publish\published\wwwroot\sample-data\weather.json
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\bin\Release\net10.0\publish\MyPortfolio.runtimeconfig.json
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\bin\Release\net10.0\publish\dotnet.js
+C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\bin\Release\net10.0\publish\web.config
