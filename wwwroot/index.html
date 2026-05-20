@@ -84,6 +84,20 @@
     </div>
 
     <!-- ✅ Simple naam - WasmFingerprintAssets=false ki wajah se -->
-    <script src="_framework/blazor.webassembly.js"></script>
-</body>
+    <script>
+        fetch('_framework/blazor.boot.json')
+            .then(function (r) { return r.json(); })
+            .then(function (boot) {
+                var resources = boot.resources;
+                var runtime = resources.runtime || resources;
+                var jsFile = Object.keys(runtime).find(function (k) {
+                    return k.startsWith('blazor.webassembly') && k.endsWith('.js');
+                });
+                if (jsFile) {
+                    var s = document.createElement('script');
+                    s.src = '_framework/' + jsFile;
+                    document.body.appendChild(s);
+                }
+            });
+    </script></body>
 </html>
