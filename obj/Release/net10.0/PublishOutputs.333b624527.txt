@@ -1,9 +1,0 @@
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\published\web.config
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\published\MyPortfolio.runtimeconfig.json
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\published\MyPortfolio.staticwebassets.endpoints.json
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\published\wwwroot\sample-data\weather.json
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\published\wwwroot\wwwroot\sample-data\weather.json
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\published\wwwroot\_redirects
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\MyPortfolio.runtimeconfig.json
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\dotnet.js
-C:\Users\hamza\Documents\MyPortfolio1\MyPortfolio\MyPortfolio\publish_output\web.config
